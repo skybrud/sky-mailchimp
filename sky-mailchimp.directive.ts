@@ -14,9 +14,9 @@
 
 	angular.module('skyMailchimp').directive('skyMailchimp',skyMailchimp);
 
-	skyMailchimp.$inject = ['$http','$timeout','transformRequestAsFormPost'];
+	skyMailchimp.$inject = ['$http','$timeout','$httpParamSerializerJQLike'];
 
-	function skyMailchimp($http,$timeout,transformRequestAsFormPost) {
+	function skyMailchimp($http,$timeout,$httpParamSerializerJQLike) {
 		var directive = {
 			restrict:'A',
 			scope:true,
@@ -37,8 +37,8 @@
 					var postFeedback = $http({
 						url: '/umbraco/api/MailChimpSubscriberApi/PostSubscriber',
 						method:'POST',
-						data:scope.mailchimp,
-						transformRequest: transformRequestAsFormPost
+						data:$httpParamSerializerJQLike(scope.mailchimp),
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded'
 					});
 
 					postFeedback.success(function(res) {
