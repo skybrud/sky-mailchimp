@@ -38,7 +38,7 @@
 						url: '/umbraco/api/MailChimpSubscriberApi/PostSubscriber',
 						method:'POST',
 						data:$httpParamSerializerJQLike(scope.mailchimp),
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded'
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 					});
 
 					postFeedback.success(function(res) {
