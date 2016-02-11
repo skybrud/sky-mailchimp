@@ -28,6 +28,9 @@
 			var timer = {};
 
 			element.on('submit', function(event) {
+				
+				var apiurl = $attributes.action || '/umbraco/api/MailChimpSubscriberApi/PostSubscriber';
+				
 				event.preventDefault();
 
 				$timeout.cancel(timer);
@@ -35,7 +38,7 @@
 				timer = $timeout(function() {
 					/* Do some magic transformRequest-stuff to actually post the data */
 					var postFeedback = $http({
-						url: '/umbraco/api/MailChimpSubscriberApi/PostSubscriber',
+						url: apiurl,
 						method:'POST',
 						data:$httpParamSerializerJQLike(scope.mailchimp),
 						headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
