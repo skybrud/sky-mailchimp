@@ -29,7 +29,7 @@
 
 			element.on('submit', function(event) {
 				
-				var apiurl = $attributes.action || '/umbraco/api/MailChimpSubscriberApi/PostSubscriber';
+				var apiurl = attributes.action || '/umbraco/api/MailChimpSubscriberApi/PostSubscriber';
 				
 				event.preventDefault();
 
