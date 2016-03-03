@@ -14,45 +14,52 @@
 
 	angular.module('skyMailchimp').directive('skyMailchimp',skyMailchimp);
 
-	skyMailchimp.$inject = ['$http','$timeout','$httpParamSerializerJQLike'];
+	skyMailchimp.$inject = ['$http', '$timeout', '$httpParamSerializerJQLike'];
 
-	function skyMailchimp($http,$timeout,$httpParamSerializerJQLike) {
+	function skyMailchimp($http, $timeout, $httpParamSerializerJQLike) {
 		var directive = {
 			restrict:'A',
-			scope:true,
-			link:link
+			controller:controller,
+			controllerAs:'skyMailchimpCtrl'
 		};
 
-		function link (scope,element,attributes) {
+		controller.$inject = ['$scope', '$element', '$attrs'];
+		function controller($scope, $element, $attrs) {
+			var _this=this;
+			var timer={};
 
-			var timer = {};
+			_this.mailchimp = {
+				mailChimpId:$scope.$eval($attrs.id),
+				name:'',
+				email:''
+			};
 
-			element.on('submit', function(event) {
+			angular.element($element).on('submit', function(e) {
+				e.preventDefault();
 				
-				var apiurl = attributes.action || '/umbraco/api/MailChimpSubscriberApi/PostSubscriber';
+				var apiurl = $attrs.action || '/umbraco/api/MailChimpSubscriberApi/PostSubscriber';
 				
-				event.preventDefault();
-
 				$timeout.cancel(timer);
 
 				timer = $timeout(function() {
-					/* Do some magic transformRequest-stuff to actually post the data */
 					var postFeedback = $http({
-						url: apiurl,
+						url:apiurl,
 						method:'POST',
-						data:$httpParamSerializerJQLike(scope.mailchimp),
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+						data:$httpParamSerializerJQLike(_this.mailchimp),
+						headers:{
+							'Content-Type':'application/x-www-form-urlencoded'
+						}
 					});
 
 					postFeedback.success(function(res) {
-						scope.error=false;
-						scope.success=true;
+						_this.error=false;
+						_this.success=true;
 					}).error(function(res) {
-						scope.success=false;
+						_this.success=false;
 						if (res && res.meta && res.meta.error) {
-							scope.error=res.meta.error;
+							_this.error=res.meta.error;
 						} else {
-							scope.error='Der er desværre sket en ukendt fejl. Prøv venligst igen senere!';
+							_this.error='Der er desværre sket en ukendt fejl. Prøv venligst igen senere!';
 						}
 					});
 				},200);
