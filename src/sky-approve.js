@@ -1,6 +1,6 @@
 // import Vue from 'vue';
 import approve from 'approvejs';
-import SkyMailchimpState from './sky-mailchimp-state';
+import SkyMailchimpState from './SkyMailchimp.state';
 
 const elements = {};
 

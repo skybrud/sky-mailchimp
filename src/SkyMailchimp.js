@@ -1,6 +1,6 @@
 import axios from 'axios';
 import _merge from 'lodash.merge';
-import SkyMailchimpState from './sky-mailchimp-state';
+import SkyMailchimpState from './SkyMailchimp.state';
 import SkyApprove from './sky-approve';
 
 /**
@@ -8,11 +8,15 @@ import SkyApprove from './sky-approve';
  */
 
 const defaultTexts = {
-	teaser: 'Tilmeld dig nyhedsbrevet',
+	teaser: '',
 	submitted: {
 		header: 'Dine oplysninger er sendt.',
 		created: 'Du modtager en mail, hvor du skal bekræfte din tilmelding.',
 		updated: 'Din profil er blevet opdateret.',
+	},
+	error: {
+		header: 'Der skete en fejl.',
+		description: 'Prøv igen senere.',
 	},
 	status: {
 		hasSubscription: 'Din e-mail er allerede tilknyttet et eksisterende abonnement.',
@@ -68,10 +72,11 @@ const defaultForm = {
 };
 
 export default {
+	name: 'SkyMailchimp',
 	directives: { SkyApprove },
 	props: {
-		contextid: String,
-		listid: String,
+		contextid: [String, Number],
+		listid: [String, Number],
 		action: String,
 		advanced: {
 			type: Boolean,
@@ -120,14 +125,14 @@ export default {
 				return {
 					header: this.merged.text.submitted.header,
 					description: this.mailchimp.existingUser
-						? this.merged.text.submitted.created
-						: this.merged.text.submitted.updated,
+						? this.merged.text.submitted.updated
+						: this.merged.text.submitted.created,
 				};
 			}
 
 			return {
-				header: 'Der skete en fejl.',
-				description: 'Prøv igen senere.',
+				header: this.merged.text.error.header,
+				description: this.merged.text.error.description,
 			};
 		},
 		buttonObject() {
@@ -135,6 +140,35 @@ export default {
 				? this.merged.text.button
 				: { submit: this.merged.text.button.submit };
 		},
+	},
+	beforeMount() {
+		if (this.advanced) {
+			// Necessary for utilizing v-model on v-if input
+			// Does not work in mounted hook
+			Object.keys(this.merged.form).forEach((key) => {
+				this.$set(this.mailchimp, this.merged.form[key].name, null);
+			});
+		}
+	},
+	mounted() {
+		if (this.advanced) {
+			const searchString = window.location.search;
+
+			// console.log(decodeURI(searchString), 'ASDSD', decodeURIComponent(searchString));
+			if (searchString) {
+				this.implementQueryInfomation(decodeURIComponent(searchString));
+
+				// If there is a searchString checkmail on next tick
+				// giving v-sky-approve time for checking the new data from URL search query
+				this.$nextTick(() => {
+					this.checkMail();
+				});
+			} else {
+				this.fetchTemplate();
+			}
+		} else {
+			this.currentStep = 'submit';
+		}
 	},
 	methods: {
 		buttonHub(callback) {
@@ -151,13 +185,13 @@ export default {
 			this.states.requestType = 'fetchTemplate';
 
 			this.fetch(this.apiEndpoints.getTemplate, this.mailchimp)
-			.then((res) => {
-				Object.assign(res.data, this.mailchimp);
-				this.currentStep = 'checkMail';
-			})
-			.then(() => {
-				this.states.loading = false;
-			});
+				.then((res) => {
+					Object.assign(res.data, this.mailchimp);
+					this.currentStep = 'checkMail';
+				})
+				.then(() => {
+					this.states.loading = false;
+				});
 		},
 		implementQueryInfomation(string) {
 			// Insert id and mail info from url in mailchimp object
@@ -232,12 +266,12 @@ export default {
 					email,
 				},
 			})
-			.then(() => {
-				this.states.requestedUpdateLink = true;
-			})
-			.then(() => {
-				this.states.loading = false;
-			});
+				.then(() => {
+					this.states.requestedUpdateLink = true;
+				})
+				.then(() => {
+					this.states.loading = false;
+				});
 		},
 		checkMail() {
 			if (this.validatedForm()) {
@@ -251,21 +285,21 @@ export default {
 					: { listId, contextId, email, subscriberId: id };
 
 				this.fetch(this.apiEndpoints.getSubscriber, params)
-				.then((res) => {
-					Object.assign(this.mailchimp, res.data);
+					.then((res) => {
+						Object.assign(this.mailchimp, res.data);
 
-					this.currentStep = 'submit';
-					this.mailChecked = true;
-				}, (err) => {
-					if (err.response && err.response.status) {
-						this.states.unauthorized = err.response.status === 401;
-						this.currentStep = 'updateLink';
+						this.currentStep = 'submit';
 						this.mailChecked = true;
-					}
-				})
-				.then(() => {
-					this.states.loading = false;
-				});
+					}, (err) => {
+						if (err.response && err.response.status) {
+							this.states.unauthorized = err.response.status === 401;
+							this.currentStep = 'updateLink';
+							this.mailChecked = true;
+						}
+					})
+					.then(() => {
+						this.states.loading = false;
+					});
 			}
 		},
 		submit() {
@@ -300,33 +334,5 @@ export default {
 
 			this.validatedForm();
 		},
-	},
-	beforeMount() {
-		if (this.advanced) {
-			// Necessary for utilizing v-model on v-if input
-			// Does not work in mounted hook
-			Object.keys(this.merged.form).forEach((key) => {
-				this.$set(this.mailchimp, this.merged.form[key].name, null);
-			});
-		}
-	},
-	mounted() {
-		if (this.advanced) {
-			const searchString = window.location.search;
-
-			if (searchString) {
-				this.implementQueryInfomation(searchString);
-
-				// If there is a searchString checkmail on next tick
-				// giving v-sky-approve time for checking the new data from URL search query
-				this.$nextTick(() => {
-					this.checkMail();
-				});
-			} else {
-				this.fetchTemplate();
-			}
-		} else {
-			this.currentStep = 'submit';
-		}
 	},
 };

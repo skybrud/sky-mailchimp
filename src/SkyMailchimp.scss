@@ -1,67 +1,58 @@
-@import '~styles/variables';
-
 .sky-mailchimp {
-	@include grid(padding, 2);
-	@include grid(padding-left padding-right, .5, 10);
-	@include grid(padding-top padding-bottom, 1, 10);
 	position: relative;
-	background-color: $color-gray-light;
 
-	@include lt(10) {
-		@include grid(margin-left margin-right, -2);
-	}
-
-	form {
-		padding: 0;
-	}
-
-	.form-group {
-		margin-bottom: 0;
-
-		&:nth-last-of-type(n+2) {
-			margin-bottom: 35px;
-		}
-
-		label {
-			@include font-family(proSemibold);
-			text-transform: uppercase;
-			font-size: $font-small;
-			color: $font-color;
-		}
-
-		.text-danger {
-			display: none;
-		}
+	.text-danger {
+		display: none;
 	}
 
 	[has-error] .form-group[has-error] {
 		.text-danger {
-			display: inline;
+			display: inline-block;
 		}
 	}
 
-	input[type="text"],
-	input[type="email"] {
-		max-width: 340px;
-		margin-top: 10px;
-
-		@include lt(10) {
-			width: 100%;
+	.form-group.checkboxes {
+		& > label {
+			display: none;
 		}
-	}
 
-	button {
-		@include button;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding-right: 20px;
-		width: auto;
-		min-width: 165px;
+		.checkbox {
+			position: relative;
 
-		@include hover {
-			svg {
-				transform: translateX(200%);
+			input,
+			label:before {
+				width: 35px;
+				height: 35px;
+			}
+
+			input {
+				position: absolute;
+				top: 0;
+				left: 0;
+				border: none;
+				background: transparent;
+				z-index: 1;
+				padding: 0;
+				cursor: pointer;
+
+				&::-ms-check {
+					display: none;
+				}
+			}
+
+			label {
+				display: flex;
+				align-items: center;
+				margin-bottom: 0;
+				user-select: none;
+				cursor: pointer;
+
+				&:before {
+					content: '';
+					display: block;
+					z-index: 0;
+					flex-shrink: 0;
+				}
 			}
 		}
 	}
@@ -94,7 +85,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: transparentize($color-gray-light, 0.25);
+		background-color: transparentize(#fff, 0.25);
 	}
 }
 
@@ -108,14 +99,6 @@
 		display: block;
 		height: 50px;
 	}
-
-	&:before {
-		background: linear-gradient(to top, $color-gray-light 0%, transparentize($color-gray-light, 1) 100%);
-	}
-
-	&:after {
-		background: linear-gradient(to bottom, $color-gray-light 0%, transparentize($color-gray-light, 1) 100%);
-	}
 }
 
 .sky-mailchimp-loader-content {
@@ -126,10 +109,6 @@
 	align-items: center;
 	flex-grow: 0;
 	width: 100%;
-	padding-top: 50px;
-	padding-left: 30px;
-	padding-right: 30px;
-	background-color: $color-gray-light;
 	text-align: center;
 
 	&:before {
