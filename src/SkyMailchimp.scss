@@ -1,109 +1,13 @@
-
 .sky-mailchimp {
 	position: relative;
 
-	form {
-		padding: 0;
-	}
-
-	.form-group {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		margin-bottom: 0;
-
-		&:nth-last-of-type(n+2) {
-			margin-bottom: 35px;
-		}
-
-		label {
-			text-transform: uppercase;
-			color: #202227;
-			order: 1;
-		}
-
-		.text-danger {
-			display: none;
-		}
-
-		&.submit {
-			border-top: 1px solid #ccc;
-			padding-top: 35px;
-		}
+	.text-danger {
+		display: none;
 	}
 
 	[has-error] .form-group[has-error] {
 		.text-danger {
-			display: inline-block;
-			color: #c53129;
-			margin-top: 1em;
-		}
-	}
-
-	input[type="text"],
-	input[type="email"] {
-		margin-top: 10px;
-		width: 100%;
-		order: 2;
-		height: 50px;
-		font-size: inherit;
-	}
-
-	.form-group.checkboxes {
-		& > label {
-			display: none;
-		}
-
-		.checkbox {
-			position: relative;
-
-			&:nth-of-type(n+2) {
-				margin-top: 10px;
-			}
-
-			input,
-			label:before {
-				width: 35px;
-				height: 35px;
-			}
-
-			input {
-				position: absolute;
-				top: 0;
-				left: 0;
-				-moz-appearance: none;
-				-webkit-appearance: none;
-				border: none;
-				background: transparent;
-				z-index: 1;
-				padding: 0;
-				cursor: pointer;
-
-				&::-ms-check {
-					display: none;
-				}
-
-				&:checked ~ label:before {
-					background-color: green;
-				}
-			}
-
-			label {
-				display: flex;
-				align-items: center;
-				margin-bottom: 0;
-				user-select: none;
-				cursor: pointer;
-
-				&:before {
-					content: '';
-					display: block;
-					border: 1px solid #c3c3c3;
-					z-index: 0;
-					margin-right: 20px;
-					flex-shrink: 0;
-				}
-			}
+			display: block;
 		}
 	}
 }
@@ -152,6 +56,8 @@
 }
 
 .sky-mailchimp-loader-content {
+	$spinnerSize: 40px;
+
 	position: relative;
 	z-index: 1;
 	display: flex;
@@ -159,23 +65,21 @@
 	align-items: center;
 	flex-grow: 0;
 	width: 100%;
-	padding-top: 50px;
-	padding-left: 30px;
-	padding-right: 30px;
+	padding-top: $spinnerSize + 10px;
 	text-align: center;
 
 	&:before {
+		content: '';
 		position: absolute;
 		top: 0;
 		left: 50%;
 		z-index: 1;
 		display: block;
 		flex-grow: 0;
-		content: '';
-		width: 40px;
-		height: 40px;
+		width: $spinnerSize;
+		height: $spinnerSize;
 		margin-left: -20px;
-		border-radius: 40px;
+		border-radius: $spinnerSize;
 		border: 1px solid #333;
 		border-bottom-color: transparent;
 		animation: spinner 0.5s linear infinite;
