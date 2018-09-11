@@ -401,7 +401,7 @@ var __vue_staticRenderFns__ = [];
   /* style */
   const __vue_inject_styles__ = function (inject) {
     if (!inject) return
-    inject("data-v-0d300d1d_0", { source: "\n.sky-mailchimp{position:relative\n}\n.sky-mailchimp-loader{position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:center;align-items:center;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .5s;opacity:1\n}\n&:after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-color:transparentize(#fff,.25)\n}\n.sky-mailchimp-loader-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;flex-grow:0;width:100%;text-align:center\n}\n@keyframes spinner{\nfrom{transform:rotate(0)\n}\nto{transform:rotate(360deg)\n}\n}", map: undefined, media: undefined });
+    inject("data-v-0d300d1d_0", { source: "\n.sky-mailchimp{position:relative\n}\n.checkbox{position:relative;top:0;left:0;border:none;background:0 0;z-index:1;padding:0;cursor:pointer\n}\nlabel{display:flex;align-items:center;margin-bottom:0;user-select:none;cursor:pointer\n}\n&:after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-color:transparentize(#fff,.25)\n}\n.sky-mailchimp-loader-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;flex-grow:0;width:100%;text-align:center\n}\n@keyframes spinner{\nfrom{transform:rotate(0)\n}\nto{transform:rotate(360deg)\n}\n}", map: undefined, media: undefined });
 
   };
   /* scoped */
