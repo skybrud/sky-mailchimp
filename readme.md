@@ -1,8 +1,27 @@
 # sky-mailchimp
+> Vue-component to subscribing to mailchimp-newsletters
 
-Vue-component to subscribing to mailchimp-newsletters
+## Installation
+```bash
+npm install sky-mailchimp
+```
+or
+```bash
+yarn add sky-mailchimp
+```
 
-Please refer to the code-files for usage and documentation!
+## Usage
+Begin by importing and installing the SkyMailchimp Vue plugin
+```js
+import Vue from 'vue';
+import SkyMailchimp from 'sky-mailchimp';
+
+// If you want to use the baseline scss add the following line
+import '${YOUR-PROJECT-ROOT-PATH}/node_modules/sky-mailchimp/src/SkyMailchimp.scss';
+
+Vue.use(SkyMailchimp);
+
+```
 
 ### Credits
 

@@ -1,4 +1,3 @@
-<script>
 import axios from 'axios';
 import _merge from 'lodash.merge';
 import SkyMailchimpState from './sky-mailchimp-state';
@@ -76,7 +75,7 @@ export default {
 		action: String,
 		advanced: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 		text: Object,
 		form: Object,
@@ -89,8 +88,7 @@ export default {
 			},
 			mailchimp: {
 				contextId: this.contextid,
-				// listId: this.listid,
-				listId: '70c1e2924b',
+				listId: this.listid,
 			},
 			apiEndpoints: {
 				action: this.action || '/umbraco/api/MailChimpSubscriberApi/PostSubscriber',
@@ -332,7 +330,3 @@ export default {
 		}
 	},
 };
-</script>
-
-<style src="./sky-mailchimp.scss"></style>
-<template src="./sky-mailchimp.html"></template>

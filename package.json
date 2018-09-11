@@ -1,0 +1,25 @@
+{
+	"name": "sky-mailchimp",
+	"version": "0.0.0",
+	"description": "Vue component handling mailchimp integration",
+	"main": "./dist/sky-mailchimp.ssr.js",
+	"module": "./dist/sky-mailchimp.esm.js",
+	"browser": "./dist/sky-mailchimp.esm.js",
+	"scripts": {
+		"dist": "yarn rimraf dist && yarn run build",
+		"build": "yarn rollup --config rollup.config.js --environment BUILD:production"
+	},
+	"author": "Skybrud.dk",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/skybrud/sky-reveal.git"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"sky-build-setup": "https://github.com/skybrud/sky-build-setup.git"
+	},
+	"peerDependencies": {
+		"vue": "^2.5.0"
+	}
+}
