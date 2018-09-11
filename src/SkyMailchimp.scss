@@ -1,14 +1,52 @@
+
 .sky-mailchimp {
 	position: relative;
 
-	.text-danger {
-		display: none;
+	form {
+		padding: 0;
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 0;
+
+		&:nth-last-of-type(n+2) {
+			margin-bottom: 35px;
+		}
+
+		label {
+			text-transform: uppercase;
+			color: #202227;
+			order: 1;
+		}
+
+		.text-danger {
+			display: none;
+		}
+
+		&.submit {
+			border-top: 1px solid #ccc;
+			padding-top: 35px;
+		}
 	}
 
 	[has-error] .form-group[has-error] {
 		.text-danger {
 			display: inline-block;
+			color: #c53129;
+			margin-top: 1em;
 		}
+	}
+
+	input[type="text"],
+	input[type="email"] {
+		margin-top: 10px;
+		width: 100%;
+		order: 2;
+		height: 50px;
+		font-size: inherit;
 	}
 
 	.form-group.checkboxes {
@@ -18,6 +56,10 @@
 
 		.checkbox {
 			position: relative;
+
+			&:nth-of-type(n+2) {
+				margin-top: 10px;
+			}
 
 			input,
 			label:before {
@@ -29,6 +71,8 @@
 				position: absolute;
 				top: 0;
 				left: 0;
+				-moz-appearance: none;
+				-webkit-appearance: none;
 				border: none;
 				background: transparent;
 				z-index: 1;
@@ -37,6 +81,10 @@
 
 				&::-ms-check {
 					display: none;
+				}
+
+				&:checked ~ label:before {
+					background-color: green;
 				}
 			}
 
@@ -50,7 +98,9 @@
 				&:before {
 					content: '';
 					display: block;
+					border: 1px solid #c3c3c3;
 					z-index: 0;
+					margin-right: 20px;
 					flex-shrink: 0;
 				}
 			}
@@ -109,17 +159,22 @@
 	align-items: center;
 	flex-grow: 0;
 	width: 100%;
+	padding-top: 50px;
+	padding-left: 30px;
+	padding-right: 30px;
 	text-align: center;
 
 	&:before {
 		position: absolute;
 		top: 0;
+		left: 50%;
 		z-index: 1;
 		display: block;
 		flex-grow: 0;
 		content: '';
 		width: 40px;
 		height: 40px;
+		margin-left: -20px;
 		border-radius: 40px;
 		border: 1px solid #333;
 		border-bottom-color: transparent;
