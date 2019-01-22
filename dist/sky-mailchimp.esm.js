@@ -107,22 +107,6 @@ const defaultForm = {
 		error: '',
 		showLabel: true,
 	},
-	name: {
-		id: Math.random().toString(35).substr(2, 5),
-		type: 'text',
-		name: 'name',
-		placeholder: '',
-		required: true,
-		pattern: null,
-		disabled: false,
-		checked: false,
-		readonly: false,
-		value: '',
-		label: '',
-		helpText: '',
-		error: '',
-		showLabel: true,
-	},
 };
 
 var script = {
