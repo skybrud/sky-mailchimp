@@ -1,6 +1,6 @@
 {
 	"name": "sky-mailchimp",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Vue component handling mailchimp integration",
 	"main": "./dist/sky-mailchimp.ssr.js",
 	"module": "./dist/sky-mailchimp.esm.js",
