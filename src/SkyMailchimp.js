@@ -43,7 +43,7 @@ const defaultForm = {
 		name: 'email',
 		placeholder: '',
 		required: true,
-		pattern: null,
+		pattern: '.+@.+\..{1,63}',
 		disabled: false,
 		checked: false,
 		readonly: false,
